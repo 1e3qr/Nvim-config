@@ -1,4 +1,3 @@
--- Mason
 return {
 	{
 		"williamboman/mason.nvim",
@@ -6,18 +5,6 @@ return {
 			require("mason").setup()
 		end,
 	},
-	-- Mason-lspconfig
-	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = { "williamboman/mason.nvim" },
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "clangd", "ts_ls", "html", "cssls", "pyright" },
-				automatic_installation = true,
-			})
-		end,
-	},
-	-- lspconfig
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
@@ -25,8 +12,23 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 		},
 		config = function()
+			vim.lsp.config("*", {
+				root_markers = { ".git" },
+			})
 
-			vim.lsp.config("*", {})
+			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+			require("mason-lspconfig").setup({
+				ensure_installed = { "lua_ls", "clangd", "ts_ls", "html", "cssls", "pyright" },
+				automatic_installation = true,
+				handlers = {
+					function(server_name)
+						require("lspconfig")[server_name].setup({
+							capabilities = capabilities,
+						})
+					end,
+				},
+			})
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(ev)
