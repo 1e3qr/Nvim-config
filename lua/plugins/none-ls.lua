@@ -8,16 +8,12 @@ return {
 			local null_ls = require("null-ls")
 			null_ls.setup({
 				sources = {
-					-- C++
 					null_ls.builtins.formatting.clang_format,
-					-- Python
 					null_ls.builtins.formatting.black,
 					null_ls.builtins.formatting.isort,
 					require("none-ls.diagnostics.flake8"),
-					-- JavaScript, HTML, CSS
 					null_ls.builtins.formatting.prettier,
 					require("none-ls.diagnostics.eslint_d"),
-					-- Lua
 					null_ls.builtins.formatting.stylua,
 				},
 			})
