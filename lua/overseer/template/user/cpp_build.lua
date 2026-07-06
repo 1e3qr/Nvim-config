@@ -4,7 +4,16 @@ return {
 		local file = vim.fn.expand("%:p")
 		local out = vim.fn.expand("%:p:r")
 		return {
-			cmd = { "sh", "-c", "g++ -g " .. file .. " -o " .. out .. " && gnome-terminal -- " .. out },
+			cmd = {
+				"sh",
+				"-c",
+				"g++ -g -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -std=c++20 "
+					.. file
+					.. " -o "
+					.. out
+					.. " && gnome-terminal -- "
+					.. out,
+			},
 			components = {
 				{ "on_output_quickfix", open = true },
 				{ "open_output", on_start = "always" },

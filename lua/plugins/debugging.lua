@@ -8,6 +8,27 @@ return {
 	},
 	config = function()
 		local dap, dapui = require("dap"), require("dapui")
+
+		dapui.setup({
+			layouts = {
+				{
+					elements = {
+						{ id = "scopes", size = 0.5 },
+						{ id = "stacks", size = 0.5 },
+					},
+					position = "left",
+					size = 40,
+				},
+				{
+					elements = {
+						{ id = "console", size = 1.0 },
+					},
+					position = "bottom",
+					size = 15,
+				},
+			},
+		})
+
 		dap.listeners.before.attach.dapui_config = function()
 			dapui.open()
 		end
@@ -27,6 +48,7 @@ return {
 		vim.keymap.set("n", "<Leader>dc", function()
 			require("dap").continue()
 		end)
+
 		require("dap-vscode-js").setup({
 			debugger_path = vim.fn.stdpath("data") .. "/lazy/vscode-js-debug",
 			adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
@@ -70,6 +92,7 @@ return {
 				end,
 				cwd = "${workspaceFolder}",
 				stopOnEntry = false,
+				console = "integratedTerminal",
 			},
 		}
 	end,
