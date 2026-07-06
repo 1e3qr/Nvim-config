@@ -11,7 +11,7 @@ return {
 					.. file
 					.. " -o "
 					.. out
-					.. " && gnome-terminal -- "
+					.. " && kitty -- "
 					.. out,
 			},
 			components = {
