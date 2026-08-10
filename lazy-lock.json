@@ -7,6 +7,7 @@
   "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
   "friendly-snippets": { "branch": "main", "commit": "6cd7280adead7f586db6fccbd15d2cac7e2188b9" },
   "hererocks": { "branch": "master", "commit": "204ab1ff8b68cb7db7c9bafb4be2abf7d22f864e" },
+  "hexview.nvim": { "branch": "main", "commit": "413b73a2177a8d48b1af6658d2741584da209ece" },
   "image.nvim": { "branch": "master", "commit": "88351f1f7d9dbae286e671ce3690a49660dd8a5c" },
   "indent-blankline.nvim": { "branch": "master", "commit": "d28a3f70721c79e3c5f6693057ae929f3d9c0a03" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
