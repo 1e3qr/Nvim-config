@@ -1,13 +1,14 @@
 return {
 	name = "g++ build",
 	builder = function()
+		vim.cmd("update")
 		local file = vim.fn.expand("%:p")
 		local out = vim.fn.expand("%:p:r")
 		return {
 			cmd = {
 				"sh",
 				"-c",
-				"g++ -g -pedantic-errors -Wall -Weffc++ -Wextra -Wconversion -Wsign-conversion -std=c++20 "
+				"g++ -std=c++20 -Wall -Wextra -Wpedantic -g -fsanitize=address,undefined -fno-omit-frame-pointer "
 					.. file
 					.. " -o "
 					.. out
