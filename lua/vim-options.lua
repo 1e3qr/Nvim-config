@@ -1,5 +1,6 @@
 vim.opt["tabstop"] = 2
 vim.opt["shiftwidth"] = 2
+vim.opt["scrolloff"] = 5
 vim.o.number = true
 vim.o.clipboard = "unnamedplus"
 vim.o.undofile = true
