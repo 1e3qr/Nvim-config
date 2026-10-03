@@ -8,19 +8,18 @@ return {
 		config = function()
 			local alpha = require("alpha")
 			local dashboard = require("alpha.themes.dashboard")
+			local ansi_header = require("ansi_header")
 
-			-- Set header
-			dashboard.section.header.opts.hl = 'AlphaHeader'
-			dashboard.section.header.val = {
-				"                                                     ",
-				"  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-				"  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-				"  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-				"  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-				"  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-				"  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
-				"                                                     ",
-			}
+			-- Header built from raw ANSI capture:
+			--   ascii-image-converter <img> -C > ~/.config/nvim/ascii_tree_raw.txt
+			-- Colors are applied after alpha renders (see AlphaReady autocmd below),
+			-- since alpha's layout engine doesn't lay child elements out horizontally.
+			local built = ansi_header.build_header(
+				vim.fn.stdpath("config") .. "/ascii_tree_raw.txt"
+			)
+			dashboard.section.header.type = built.type
+			dashboard.section.header.val = built.val
+			dashboard.section.header.opts = built.opts
 
 			-- Set menu
 			dashboard.section.buttons.val = {
@@ -49,6 +48,14 @@ return {
 
 			-- Send config to alpha
 			alpha.setup(dashboard.opts)
+
+			-- Apply the ASCII art's colors once alpha has actually drawn the buffer
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "AlphaReady",
+				callback = function()
+					ansi_header.apply_highlights(0)
+				end,
+			})
 
 			-- Disable folding on alpha buffer
 			vim.cmd([[
